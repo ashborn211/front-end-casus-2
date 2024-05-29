@@ -18,6 +18,20 @@
 
 /* styles/globals.css */
 body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+main {
+  width: 60vw;
+  height: 100vh;
+  background-color: blue;
+  box-sizing: border-box;
   background-color: #ADD8E6; /* Light blue background */
   display: flex;
   justify-content: center;
