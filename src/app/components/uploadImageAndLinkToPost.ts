@@ -1,12 +1,7 @@
 // components/uploadImageAndLinkToPost.ts
-import { storage, firestore } from '../FireBase';
+import { storage, db } from '../FireBaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-
-interface PostData {
-  imageUrl: string;
-  content: string;
-}
 
 export const uploadImageAndCreatePost = async (data: File | string, content: string): Promise<void> => {
   try {
@@ -23,15 +18,15 @@ export const uploadImageAndCreatePost = async (data: File | string, content: str
     }
 
     // Create a new Firestore document with an auto-generated ID
-    const postDocRef = await addDoc(collection(firestore, 'posts'), {
+    await addDoc(collection(db, 'posts'), {
       imageUrl: downloadURL,
       content: content,
       createdAt: Timestamp.now()
     });
 
-    console.log('Post created in Firestore with ID:', postDocRef.id);
+    console.log('Post created successfully.');
   } catch (error) {
-    console.error('Error creating post in Firestore:', error);
+    console.error('Error creating post:', error);
     throw error;
   }
 };

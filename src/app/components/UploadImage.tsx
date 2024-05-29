@@ -1,8 +1,10 @@
+"use client";
+
 // components/UploadImage.tsx
 import { useState, ChangeEvent } from 'react';
 import { uploadImageAndCreatePost } from './uploadImageAndLinkToPost';
 
-const UploadImage: React.FC = () => {
+const UploadImage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -38,15 +40,13 @@ const UploadImage: React.FC = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={(e) => { e.preventDefault(); handleUpload(); }}>
       <h1>Create Post</h1>
-      <div>
-        <input type="file" onChange={handleFileChange} />
-        <input type="text" placeholder="Image URL" value={imageUrl} onChange={handleUrlChange} />
-      </div>
+      <input type="file" onChange={handleFileChange} />
+      <input type="text" placeholder="Image URL" value={imageUrl} onChange={handleUrlChange} />
       <textarea placeholder="Enter content" value={content} onChange={handleContentChange}></textarea>
-      <button onClick={handleUpload}>Create Post</button>
-    </div>
+      <button type="submit">Create Post</button>
+    </form>
   );
 };
 
