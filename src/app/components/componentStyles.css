@@ -45,15 +45,12 @@ body {
     background-color: #0056b3;
   }
   
-
-  .posts-container {
-    max-width: 800px; /* Adjust this value as needed */
-    margin: 0 auto;
-  }
-  
   .post {
     display: flex;
+    background-color: white; /* Set background color to white */
+    padding: 20px; /* Add padding for spacing */
     margin-bottom: 20px; /* Adjust spacing between posts */
+    width: 30vw;
   }
   
   .post img {
@@ -62,9 +59,6 @@ body {
     margin-right: 20px; /* Adjust spacing between image and content */
   }
   
-  .post-content {
-    flex-grow: 1;
-  }
+
   
-  /* Add additional styling as needed */
   
