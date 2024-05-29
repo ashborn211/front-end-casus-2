@@ -43,9 +43,11 @@ const PostsComponent = () => {
     <div>
       <h1>Posts</h1>
       {posts.map((post, index) => (
-        <div key={index}>
+          <div className="post" key={index}>
           <img src={post.imageUrl} alt="Post" />
-          <p>{post.content}</p>
+          <div className="post-content">
+            <p>{post.content}</p>
+          </div>
         </div>
       ))}
     </div>

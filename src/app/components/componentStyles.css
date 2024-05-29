@@ -46,5 +46,25 @@ body {
   }
   
 
-
+  .posts-container {
+    max-width: 800px; /* Adjust this value as needed */
+    margin: 0 auto;
+  }
+  
+  .post {
+    display: flex;
+    margin-bottom: 20px; /* Adjust spacing between posts */
+  }
+  
+  .post img {
+    width: 200px; /* Adjust image width */
+    height: auto;
+    margin-right: 20px; /* Adjust spacing between image and content */
+  }
+  
+  .post-content {
+    flex-grow: 1;
+  }
+  
+  /* Add additional styling as needed */
   
