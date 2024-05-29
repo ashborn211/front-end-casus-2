@@ -33,6 +33,7 @@ const UploadImage = () => {
         alert('Post created successfully');
       } catch (error) {
         alert('Failed to create post');
+        console.error('Error creating post:', error);
       }
     } else {
       alert('Please select a file or provide an image URL, and enter content.');
