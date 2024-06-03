@@ -1,132 +1,132 @@
 body {
-    background-color: #ADD8E6; /* Light blue background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  form {
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  input[type="file"],
-  input[type="text"],
-  textarea {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  button {
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .post {
-    display: flex;
-    background-color: white; /* Set background color to white */
-    padding: 20px; /* Add padding for spacing */
-    margin-bottom: 20px; /* Adjust spacing between posts */
-    width: 30vw;
-  }
-  
-  .post img {
-    width: 200px; /* Adjust image width */
-    height: auto;
-    margin-right: 20px; /* Adjust spacing between image and content */
-  }
-  
+  background-color: #ADD8E6; /* Light blue background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="file"],
+input[type="text"],
+textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.post {
+  display: flex;
+  background-color: white; /* Set background color to white */
+  padding: 20px; /* Add padding for spacing */
+  margin-bottom: 20px; /* Adjust spacing between posts */
+  width: 30vw;
+}
+
+.post img {
+  width: 200px; /* Adjust image width */
+  height: auto;
+  margin-right: 20px; /* Adjust spacing between image and content */
+}
+
 
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 
 header {
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 190px;
-  background: linear-gradient(to bottom, #101233 10%, #2f3699 100%);
-  align-items: center;
-  font-family: "Itim", cursive;
-  font-weight: 400;
-  font-style: normal;
-  color: white;
-  gap: 15px;
-  z-index: 1000;
+position: sticky;
+top: 0;
+display: flex;
+flex-direction: column;
+width: 100%;
+height: 190px;
+background: linear-gradient(to bottom, #101233 10%, #2f3699 100%);
+align-items: center;
+font-family: "Itim", cursive;
+font-weight: 400;
+font-style: normal;
+color: white;
+gap: 15px;
+z-index: 1000;
 }
 
 .logo {
-  width: 50%;
+width: 50%;
 }
 
 .logo h1 {
-  font-size: 60px;
+font-size: 60px;
 }
 
 .logo p {
-  font-size: 25px;
-  margin-left: 35%;
+font-size: 25px;
+margin-left: 35%;
 }
 
 nav {
-  background: linear-gradient(to bottom, #101233 10%, #2f3699 100%);
-  display: flex;
-  align-items: center;
-  width: 102%;
-  height: 50px;
-  border-radius: 7px;
+background: linear-gradient(to bottom, #101233 10%, #2f3699 100%);
+display: flex;
+align-items: center;
+width: 102%;
+height: 50px;
+border-radius: 7px;
 }
 
 .links {
-  height: 100%;
-  width: 70%;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  font-size: 22px;
+height: 100%;
+width: 70%;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+font-size: 22px;
 }
 
 .search {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30%;
-  height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+width: 30%;
+height: 100%;
 }
 
 .search-bar {
-  color: black;
-  font-size: 22px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
-  width: 50%;
-  height: 60%;
+color: black;
+font-size: 22px;
+background-color: #d9d9d9;
+border-radius: 5px;
+width: 50%;
+height: 60%;
 }
 
 .search svg {
-  margin-right: 10px;
+margin-right: 10px;
 }
