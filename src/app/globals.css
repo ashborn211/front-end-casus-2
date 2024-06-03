@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -31,4 +31,9 @@ main {
   height: 100vh;
   background-color: blue;
   box-sizing: border-box;
+}
+* {
+  font-family: "Itim", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
