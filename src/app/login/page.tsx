@@ -6,6 +6,9 @@ import { auth } from "../FireBaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Header from "../components/Header";
+import { Main } from "next/document";
+import  "./login.css";
+import Link from "next/link";
 
 
 const LoginPage = () => {
@@ -33,11 +36,42 @@ const LoginPage = () => {
   };
 
   return (
-    <><Header />
+    <main>
+    <><Header/>
     <form onSubmit={handleLogin}>
+    <div className="container">
+        <h1 className="stroke-text">MyChan</h1>
+        <p>Sign into the world's best webpage!</p>
+        <div className="login-box">
+            <h2>Member Login</h2>
+            
+                <label htmlFor="email">E-Mail:</label>
+                <input
+            type="email"
+            className="form-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+                <label htmlFor="password">Password:</label>
+                <input
+            type="email"
+            className="form-input"
+            value={email}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+                <a href="#">Password forgotten?</a>
+                <button><Link href="/login" className="login-link">
+          Login
+        </Link></button>
+            
+            <p><a href="#">Or Sign Up Instead </a></p>
+        </div>
 
+    </div>
     </form></>
- 
+    </main>
   );
 };
 

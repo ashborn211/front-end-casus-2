@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+.container {
+    text-align: center;
+    border: 2px solid #0077b6;
+    padding: 10px;
+    background-color: #caf0f8;
+  
+}
+
+h1 {
+    font-size: 72px;
+    color: #03045e;
+    margin-bottom: 0;
+    font-family: "Itim", cursive;
+}
+.stroke-text {
+    text-shadow: 
+        -3px -3px 0 #000,  
+        3px -3px 0 #000,
+        -3px 3px 0 #000,
+        3px 3px 0 #000; /* Black outline */
+}
+
+p {
+    margin-top: 0;
+    font-size: 18px;
+    color: white;
+}
+
+.login-box {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #0077b6;
+    background-color: #99D9EA;  
+}
+
+h2 {
+    color: #03045e;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #03045e;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #0077b6;
+    border-radius: 5px;
+}
+
+a {
+    display: block;
+    margin-bottom: 20px;
+    color: #0077b6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #d00000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #9d0208;
+}
+
+form {
+    margin: 0;
+}
