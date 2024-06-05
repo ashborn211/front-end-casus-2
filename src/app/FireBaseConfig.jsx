@@ -26,4 +26,4 @@ const storage = getStorage();
 const storageRef = ref(storage);
 
 
-export { auth, db, storage };
+export { auth, db, storage, };

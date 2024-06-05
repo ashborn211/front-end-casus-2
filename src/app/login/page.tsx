@@ -1,14 +1,15 @@
 // src/app/page.tsx
 "use client";
 
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { auth } from "../FireBaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +23,9 @@ const LoginPage = () => {
       console.error(error.message);
       // Check if the error message indicates that the user doesn't exist
       if (error.code === "auth/user-not-found") {
-        const register = confirm("User does not exist. Do you want to register?");
+        const register = confirm(
+          "User does not exist. Do you want to register?"
+        );
         if (register) {
           router.push("/register");
         }
