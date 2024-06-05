@@ -16,12 +16,24 @@ export default function Header() {
       </div>
       <nav>
         <div className="links">
-          <Link href={`/home`} className="navLink">Home</Link>
-          <Link href={`/rooms`} className="navLink">Chatrooms</Link>
-          <Link href={`/users`} className="navLink">Users</Link>
-          <Link href={`/posts`} className="navLink">Top posts</Link>
-          <Link href={`/boards`} className="navLink">Boards</Link>
-          <Link href={`/user`}>account</Link>
+          <Link href={`/home`} className="navLink">
+            Home
+          </Link>
+          <Link href={`/rooms`} className="navLink">
+            Chatrooms
+          </Link>
+          <Link href={`/users`} className="navLink">
+            Users
+          </Link>
+          <Link href={`/posts`} className="navLink">
+            Top posts
+          </Link>
+          <Link href={`/boards`} className="navLink">
+            Boards
+          </Link>
+          <Link href={`/user`} className="navLink">
+            account
+          </Link>
         </div>
         <div className="search">
           <svg
