@@ -1,9 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 .container {
+    margin-top: 15px;
     text-align: center;
     border: 2px solid #0077b6;
-    padding: 10px;
-    background-color: #caf0f8;
+    padding: 20px;
+    background-color: #99D9EA;
   
 }
 
@@ -64,16 +65,15 @@ a:hover {
     text-decoration: underline;
 }
 
-button {
-    background-color: #d00000;
+.login-link {
+    background-color: #E30000;
     color: white;
-    padding: 10px 20px;
-    border: none;
+    padding: 1px 1px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-button:hover {
+.login-link:hover {
     background-color: #9d0208;
 }
 

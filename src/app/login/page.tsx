@@ -62,9 +62,7 @@ const LoginPage = () => {
             required
           />
                 <a href="#">Password forgotten?</a>
-                <button><Link href="/login" className="login-link">
-          Login
-        </Link></button>
+                <Link href="/login" className="login-link">LOGIN</Link>
             
             <p><a href="#">Or Sign Up Instead </a></p>
         </div>
