@@ -63,7 +63,6 @@ const RegisterPage = () => {
               required
             />
           </div>
-          {/* Display standard profile picture */}
           <img
             src={standardProfilePicture}
             alt="Standard Profile Picture"
