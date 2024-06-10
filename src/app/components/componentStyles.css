@@ -1,3 +1,64 @@
+body {
+  background-color: #add8e6; /* Light blue background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="file"],
+input[type="text"],
+textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.post {
+  display: flex;
+  background-color: white; /* Set background color to white */
+  padding: 20px; /* Add padding for spacing */
+  margin-bottom: 20px; /* Adjust spacing between posts */
+  width: 30vw;
+}
+
+.post img {
+  width: 200px; /* Adjust image width */
+  height: auto;
+  margin-right: 20px; /* Adjust spacing between image and content */
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 
 header {
