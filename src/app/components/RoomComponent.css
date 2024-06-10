@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+.room-container {
+  display: flex;
+  width: 500px;
+  height: 25%;
+  border: 4px solid #b5a5d5;
+  background-color: #d9d9d9;
+}
+.room-image {
+  border-right: 4px solid #b5a5d5;
+  width: 175px;
+  height: 100%;
+  position: relative;
+}
+.room-text {
+  margin-left: 1%;
+  display: flex;
+  flex-direction: column;
+  width: 64%;
+  height: 100%;
+}
+.room-title {
+  font-size: 32px;
+  width: 100%;
+  height: 30%;
+}
+.room-description {
+  width: 100%;
+  height: 70%;
+  font-size: 26px;
+}

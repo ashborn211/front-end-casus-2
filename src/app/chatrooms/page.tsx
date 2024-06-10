@@ -1,99 +1,85 @@
+"use client";
+
 import Header from "../components/Header";
 import "./chatrooms.css";
-import Image from "next/image";
-import "./images.png";
-const chatrooms = () => {
+import RoomComponent from "../components/RoomComponent";
+import { useState, useEffect } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { ref, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../FireBaseConfig";
+
+interface Room {
+  description: string;
+  image: string;
+  link: string;
+  title: string;
+}
+
+const Chatrooms = () => {
+  const [rooms, setRooms] = useState<Room[]>([]);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const roomDocsPromises = Array.from({ length: 6 }, (_, index) => {
+          const roomDocRef = doc(db, "chatrooms", `room${index + 1}`);
+          return getDoc(roomDocRef);
+        });
+
+        const roomDocsSnapshots = await Promise.all(roomDocsPromises);
+
+        const fetchedRoomsPromises = roomDocsSnapshots.map(
+          async (roomDocSnapshot, index) => {
+            if (roomDocSnapshot.exists()) {
+              const roomData = roomDocSnapshot.data() as Room;
+              try {
+                const imageRef = ref(
+                  storage,
+                  `chatrooms/images/image${index + 1}.png`
+                );
+                const imageURL = await getDownloadURL(imageRef);
+                roomData.image = imageURL;
+              } catch (error) {
+                console.error(
+                  `Error fetching image URL for room${index + 1}:`,
+                  error
+                );
+                roomData.image = ""; // Fallback or default image URL can be set here
+              }
+              return roomData;
+            } else {
+              console.log(`Room 'room${index + 1}' does not exist.`);
+              return null;
+            }
+          }
+        );
+
+        const fetchedRooms = await Promise.all(fetchedRoomsPromises);
+        setRooms(fetchedRooms.filter((room) => room !== null) as Room[]);
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      }
+    };
+
+    fetchRooms();
+  }, []);
+
   return (
     <main>
-      <Header></Header>
+      <Header />
       <div className="chatroom-container">
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
-        <div className="room-container">
-          <div className="room-image">
-            <Image
-              src="/images.png"
-              alt="My Image Description"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-          <div className="room-text">
-            <div className="room-title">Dummy tekst</div>
-            <div className="room-description">Chatroom description</div>
-          </div>
-        </div>
+        {rooms.map((room, index) => (
+          <RoomComponent
+            key={index}
+            title={room.title}
+            description={room.description}
+            imageSrc={room.image}
+            link={room.link}
+          />
+        ))}
       </div>
     </main>
   );
 };
 
-export default chatrooms;
+export default Chatrooms;
