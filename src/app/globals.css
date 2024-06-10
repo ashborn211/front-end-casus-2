@@ -29,6 +29,5 @@ body {
 main {
   width: 60vw;
   height: 100vh;
-  background-color: blue;
-  box-sizing: border-box;
+  background-color: #99D9EA;
 }
