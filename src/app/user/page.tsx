@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "../FireBaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import withAuth from "../components/withAuth";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -12,18 +13,12 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!auth.currentUser) {
-        router.push("/login");
-        return;
-      }
-
       try {
-        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-        if (userDoc.exists()) {
-          setUserData(userDoc.data());
-        } else {
-          console.error("No such document!");
-          router.push("/home");
+        if (auth.currentUser) {
+          const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+          if (userDoc.exists()) {
+            setUserData(userDoc.data());
+          }
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -59,4 +54,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuth(ProfilePage);
