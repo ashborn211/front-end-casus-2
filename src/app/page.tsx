@@ -8,7 +8,6 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import Header from "./components/Header";
 import "./login.css";
-import Link from "next/link";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
