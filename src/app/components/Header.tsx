@@ -17,7 +17,7 @@ export default function Header() {
       <nav>
         <div className="links">
           <Link href={`/home`} className="navLink">Home</Link>
-          <Link href={`/rooms`} className="navLink">Chatrooms</Link>
+          <Link href={`/chatrooms`} className="navLink">Chatrooms</Link>
           <Link href={`/users`} className="navLink">Users</Link>
           <Link href={`/posts`} className="navLink">Top posts</Link>
           <Link href={`/boards`} className="navLink">Boards</Link>
