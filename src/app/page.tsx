@@ -1,15 +1,11 @@
-// src/app/page.tsx
-"use client";
-
+// src/app/page.tsx (Login Page)
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, provider, db } from "./FireBaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
-
-const standardProfilePicture = "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
+import { doc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -22,7 +18,7 @@ const LoginPage = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
-      router.push("/home");
+      router.push("/user");
     } catch (error: any) {
       console.error(error.message);
       if (error.code === "auth/user-not-found") {
@@ -39,14 +35,15 @@ const LoginPage = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const userDoc = await addDoc(collection(db, "users"), {
+      // Ensure the user data is stored in Firestore
+      await setDoc(doc(db, "users", user.uid), {
         userId: user.uid,
         email: user.email,
-        profilePicture: user.photoURL || standardProfilePicture,
+        profilePicture: user.photoURL,
       });
 
       alert("Google Sign-In successful!");
-      router.push("/home");
+      router.push("/user");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
     }
