@@ -1,16 +1,88 @@
-// pages/index.tsx
+// src/app/page.tsx
+"use client";
+
+import { useState } from "react";
+import { auth } from "./FireBaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import Header from "./components/Header";
+import { Main } from "next/document";
+import  "./login.css";
 import Link from "next/link";
-const HomePage = () => {
+
+
+const LoginPage = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      router.push("/home");
+    } catch (error: any) {
+      console.error(error.message);
+      // Check if the error message indicates that the user doesn't exist
+      if (error.code === "auth/user-not-found") {
+        const register = confirm("User does not exist. Do you want to register?");
+        if (register) {
+          router.push("/register");
+        }
+      }
+    }
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <main className="relative flex min-h-screen flex-col items-center justify-center">
-        <div className={"text-black mt-12 grid grid-cols-3 gap-5"}>
-          <Link href={"/login"}>login</Link>
-          <Link href={"/register"}>geen account</Link>
-        </div>
-      </main>
+    <main>
+    <><Header/>
+    <form onSubmit={handleLogin}>
+    <div className="container">
+        <h1 className="stroke-text">MyChan</h1>
+        <p>Sign into the world's best webpage!</p>
+        <div className="parent-container">
+  <div className="login-box">
+    <h2>Member Login</h2>
+    
+    <label htmlFor="email">
+      E-Mail:
+      <input
+        type="email"
+        className="form-input"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+    </label>
+    
+    <label htmlFor="password">
+      Password:
+      <input
+        type="password"
+        className="form-input"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+      />
+    </label>
+    
+    <a href="#">Password forgotten?</a>
+    
+    
+      <Link href="/login" className="login-link">LOGIN</Link>
+    
+    
+    <p><a href="#">Or Sign Up Instead </a></p>
+  </div>
+</div>
+
+
     </div>
+    </form></>
+    </main>
   );
 };
 
-export default HomePage;
+export default LoginPage;
