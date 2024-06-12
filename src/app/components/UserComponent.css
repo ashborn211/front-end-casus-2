@@ -1,0 +1,16 @@
+.user-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 175px;
+}
+.user-name {
+  font-size: 31px;
+  max-width: 175px;
+}
+img {
+  width: 175px;
+  height: 175px;
+  margin-bottom: 3%;
+}

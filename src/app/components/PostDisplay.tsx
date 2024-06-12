@@ -25,7 +25,7 @@ const PostsComponent = () => {
           const postData = doc.data();
           const post: Post = {
             imageUrl: postData.imageUrl,
-            content: postData.content,
+            content: postData.content,  
           };
           fetchedPosts.push(post);
         });
