@@ -41,7 +41,7 @@ const UploadImage = () => {
   };
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); handleUpload(); }}>
+    <form className='upload-form' onSubmit={(e) => { e.preventDefault(); handleUpload(); }}>
       <h1>Create Post</h1>
       <input type="file" onChange={handleFileChange} />
       <input type="text" placeholder="Image URL" value={imageUrl} onChange={handleUrlChange} />

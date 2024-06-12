@@ -1,5 +1,8 @@
+"use client";
+
 import Header from "../components/Header";
 import PostsComponent from "../components/PostDisplay";
+import withAuth from "../components/withAuth";
 
 const Home = () => {
   return (
@@ -14,4 +17,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);

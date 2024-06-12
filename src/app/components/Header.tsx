@@ -1,12 +1,8 @@
-import "./componentStyles.css";
 import Link from "next/link"; // Import Link from Next.js
-
+import React from "react";
+import LogoutButton from "./LogoutButton"; // Import the LogoutButton component
+import "./componentStyles.css";
 export default function Header() {
-  // Mock user data (replace with actual user data)
-  const user = {
-    id: "userId123",
-    username: "exampleUser",
-  };
 
   return (
     <header>
@@ -16,12 +12,13 @@ export default function Header() {
       </div>
       <nav>
         <div className="links">
-          <Link href={`/home`} className="navLink">Home</Link>
-          <Link href={`/rooms`} className="navLink">Chatrooms</Link>
-          <Link href={`/users`} className="navLink">Users</Link>
-          <Link href={`/posts`} className="navLink">Top posts</Link>
-          <Link href={`/boards`} className="navLink">Boards</Link>
-          <Link href={`/user`} className="navLink">account</Link>
+          <Link href="/home" className="navLink">Home</Link>
+          <Link href="/chatrooms" className="navLink">Chatrooms</Link>
+          <Link href="/users" className="navLink">Users</Link>
+          <Link href="/posts" className="navLink">Top posts</Link>
+          <Link href="/upload" className="navLink">Upload</Link>
+          <Link href="/boards" className="navLink">Boards</Link>
+          <Link href="/user" className="navLink">Account</Link>
         </div>
         <div className="search">
           <svg
@@ -36,9 +33,9 @@ export default function Header() {
               fill="white"
             />
           </svg>
-
           <input className="search-bar" type="text" placeholder="Search..." />
         </div>
+        <LogoutButton />
       </nav>
     </header>
   );

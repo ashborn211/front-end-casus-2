@@ -1,4 +1,5 @@
-// src/app/page.tsx
+// src/app/page.tsx (Login Page)
+
 "use client";
 
 import Header from "./components/Header";
@@ -7,7 +8,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, provider, db } from "./FireBaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, doc, setDoc } from "firebase/firestore";
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
@@ -35,30 +36,44 @@ const LoginPage = () => {
         if (register) {
           router.push("/register");
         }
+      } else if (error.code === "auth/wrong-password") {
+        alert("Incorrect password. Please try again.");
+      } else {
+        alert("Login failed. Please try again.");
       }
     }
   };
+
+
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const userDoc = await addDoc(collection(db, "users"), {
-        userId: user.uid,
-        email: user.email,
-        profilePicture: user.photoURL || standardProfilePicture,
-      });
+      // Check if user already exists in Firestore
+      const userQuery = query(collection(db, "users"), where("email", "==", user.email));
+      const userQuerySnapshot = await getDocs(userQuery);
+
+      if (userQuerySnapshot.empty) {
+        // User doesn't exist, create a new document
+        await setDoc(doc(db, "users", user.uid), {
+          userId: user.uid,
+          email: user.email,
+          profilePicture: standardProfilePicture,
+        });
+      }
+
 
       alert("Google Sign-In successful!");
       router.push("/home");
     } catch (error: any) {
       console.error("Error signing in with Google:", error.message);
+      alert("Google Sign-In failed. Please try again.");
     }
   };
 
   return (
     <main>
-
       <>
         <Header />
         <form onSubmit={handleLogin}>
@@ -92,6 +107,7 @@ const LoginPage = () => {
                 </label>
 
                 <a href="register">Password forgotten?</a>
+
 <div className="button-container">
   <button onClick={handleGoogleSignIn} className="login-link">Google</button>
   <button type="submit" className="login-link">LOGIN</button>
