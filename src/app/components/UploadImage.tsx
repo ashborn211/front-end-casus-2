@@ -1,8 +1,9 @@
+// components/UploadImage.tsx
 "use client";
 
-// components/UploadImage.tsx
 import { useState, ChangeEvent } from 'react';
 import { uploadImageAndCreatePost } from './uploadImageAndLinkToPost';
+import { auth } from "../FireBaseConfig";
 
 const UploadImage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -29,8 +30,13 @@ const UploadImage = () => {
     if ((file || imageUrl) && content) {
       try {
         const data = file ? file : imageUrl;
-        await uploadImageAndCreatePost(data, content);
-        alert('Post created successfully');
+        const userId = auth.currentUser ? auth.currentUser.uid : null; // Get current user ID
+        if (userId) {
+          await uploadImageAndCreatePost(data, content, userId); // Pass user ID to upload function
+          alert('Post created successfully');
+        } else {
+          alert('User not authenticated');
+        }
       } catch (error) {
         alert('Failed to create post');
         console.error('Error creating post:', error);

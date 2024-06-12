@@ -1,4 +1,5 @@
 "use client";
+//src/app/upload
 import '../components/componentStyles.css';
 import UploadImage from "../components/UploadImage";
 import withAuth from "../components/withAuth";
