@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+.user-container {
+  margin-top: 3%;
+  width: 100%;
+  height: auto;
+  border: 4px solid #2f3699;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
