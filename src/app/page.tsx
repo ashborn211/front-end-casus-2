@@ -7,15 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, provider, db } from "./FireBaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, doc, setDoc } from "firebase/firestore";
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
@@ -67,6 +59,7 @@ const LoginPage = () => {
         await setDoc(doc(db, "users", user.uid), {
           userId: user.uid,
           email: user.email,
+          displayName: user.displayName,
           profilePicture: user.photoURL || standardProfilePicture,
         });
       }
