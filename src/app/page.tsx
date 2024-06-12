@@ -1,5 +1,4 @@
 // src/app/page.tsx (Login Page)
-
 "use client";
 
 import Header from "./components/Header";
@@ -12,7 +11,6 @@ import { collection, addDoc, getDocs, query, where, doc, setDoc } from "firebase
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
-
 
 const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
@@ -44,7 +42,6 @@ const LoginPage = () => {
     }
   };
 
-
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -62,7 +59,6 @@ const LoginPage = () => {
           profilePicture: user.photoURL || standardProfilePicture,
         });
       }
-
 
       alert("Google Sign-In successful!");
       router.push("/home");
@@ -108,75 +104,25 @@ const LoginPage = () => {
 
                 <a href="register">Password forgotten?</a>
 
-<div className="button-container">
-  <button onClick={handleGoogleSignIn} className="login-link">Google</button>
-  <button type="submit" className="login-link">LOGIN</button>
-</div>
+                <button type="submit" className="login-link">
+                  LOGIN
+                </button>
+
                 <p>
                   <a href="register">Or Sign Up Instead </a>
                 </p>
-                
               </div>
-
-    <>
-      <Header />
-      <form onSubmit={handleLogin}>
-        <div className="container">
-          <h1 className="stroke-text">MyChan</h1>
-          <p>Sign into the world's best webpage!</p>
-          <div className="parent-container">
-            <div className="login-box">
-              <h2>Member Login</h2>
-
-              <label htmlFor="email">
-                E-Mail:
-                <input
-                  type="email"
-                  className="form-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </label>
-
-              <label htmlFor="password">
-                Password:
-                <input
-                  type="password"
-                  className="form-input"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </label>
-
-              <a href="register">Password forgotten?</a>
-
-              <button type="submit" className="login-link">
-                LOGIN
-              </button>
-
-              <p>
-                <a href="register">Or Sign Up Instead </a>
-              </p>
-
             </div>
-            
           </div>
-
         </form>
+        <button
+          onClick={handleGoogleSignIn}
+          className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+        >
+          Sign in with Google
+        </button>
       </>
     </main>
-        </div>
-      </form>
-      <button
-        onClick={handleGoogleSignIn}
-        className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
-      >
-        Sign in with Google
-      </button>
-    </>
-  </main>
   );
 };
 
