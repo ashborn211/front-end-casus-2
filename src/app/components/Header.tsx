@@ -1,5 +1,13 @@
 import "./componentStyles.css";
+import Link from "next/link"; // Import Link from Next.js
+
 export default function Header() {
+  // Mock user data (replace with actual user data)
+  const user = {
+    id: "userId123",
+    username: "exampleUser",
+  };
+
   return (
     <header>
       <div className="logo">
@@ -8,11 +16,12 @@ export default function Header() {
       </div>
       <nav>
         <div className="links">
-          <div className="navLink">Home</div>
-          <div className="navLink">Chatrooms</div>
-          <div className="navLink">Users</div>
-          <div className="navLink">Top posts</div>
-          <div className="navLink">Boards</div>
+          <Link href={`/home`} className="navLink">Home</Link>
+          <Link href={`/rooms`} className="navLink">Chatrooms</Link>
+          <Link href={`/users`} className="navLink">Users</Link>
+          <Link href={`/posts`} className="navLink">Top posts</Link>
+          <Link href={`/boards`} className="navLink">Boards</Link>
+          <Link href={`/user`} className="navLink">account</Link>
         </div>
         <div className="search">
           <svg
