@@ -56,7 +56,7 @@ const LoginPage = () => {
         await setDoc(doc(db, "users", user.uid), {
           userId: user.uid,
           email: user.email,
-          profilePicture: standardProfilePicture,
+          profilePicture: user.photoURL || standardProfilePicture,
         });
       }
 
