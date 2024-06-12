@@ -7,7 +7,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, provider, db } from "./FireBaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { collection, addDoc, getDocs, query, where, doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
@@ -48,7 +56,10 @@ const LoginPage = () => {
       const user = result.user;
 
       // Check if user already exists in Firestore
-      const userQuery = query(collection(db, "users"), where("email", "==", user.email));
+      const userQuery = query(
+        collection(db, "users"),
+        where("email", "==", user.email)
+      );
       const userQuerySnapshot = await getDocs(userQuery);
 
       if (userQuerySnapshot.empty) {
@@ -104,9 +115,14 @@ const LoginPage = () => {
 
                 <a href="register">Password forgotten?</a>
 
-                <button type="submit" className="login-link">
-                  LOGIN
-                </button>
+                <div className="button-container">
+                  <button onClick={handleGoogleSignIn} className="login-link">
+                    Google
+                  </button>
+                  <button type="submit" className="login-link">
+                    LOGIN
+                  </button>
+                </div>
 
                 <p>
                   <a href="register">Or Sign Up Instead </a>
@@ -115,12 +131,6 @@ const LoginPage = () => {
             </div>
           </div>
         </form>
-        <button
-          onClick={handleGoogleSignIn}
-          className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
-        >
-          Sign in with Google
-        </button>
       </>
     </main>
   );

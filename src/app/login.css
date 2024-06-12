@@ -77,7 +77,6 @@ input[type="password"]{
 
 a {
     display: block;
-
     margin-bottom: 19px;
     text-decoration: none;
     
@@ -110,4 +109,3 @@ a:hover {
 form {
     margin: 0;
 }
-
