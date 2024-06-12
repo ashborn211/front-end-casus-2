@@ -58,6 +58,50 @@ const LoginPage = () => {
 
   return (
     <main>
+
+      <>
+        <Header />
+        <form onSubmit={handleLogin}>
+          <div className="container">
+            <h1 className="stroke-text">MyChan</h1>
+            <p>Sign into the world's best webpage!</p>
+            <div className="parent-container">
+              <div className="login-box">
+                <h2>Member Login</h2>
+
+                <label htmlFor="email">
+                  E-Mail:
+                  <input
+                    type="email"
+                    className="form-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+
+                <label htmlFor="password">
+                  Password:
+                  <input
+                    type="password"
+                    className="form-input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </label>
+
+                <a href="register">Password forgotten?</a>
+<div className="button-container">
+  <button onClick={handleGoogleSignIn} className="login-link">Google</button>
+  <button type="submit" className="login-link">LOGIN</button>
+</div>
+                <p>
+                  <a href="register">Or Sign Up Instead </a>
+                </p>
+                
+              </div>
+
     <>
       <Header />
       <form onSubmit={handleLogin}>
@@ -99,8 +143,14 @@ const LoginPage = () => {
               <p>
                 <a href="register">Or Sign Up Instead </a>
               </p>
+
             </div>
+            
           </div>
+
+        </form>
+      </>
+    </main>
         </div>
       </form>
       <button
