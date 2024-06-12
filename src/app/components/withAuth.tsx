@@ -1,25 +1,35 @@
-import { useEffect } from "react";
+// src/components/withAuth.tsx
+"use client";
+
+import { useEffect, useState, ComponentType } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../FireBaseConfig";
 
-const withAuth = (WrappedComponent: React.ComponentType) => {
-  const Wrapper = (props: any) => {
+interface WithAuthProps {}
+
+const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
+  return (props: P & WithAuthProps) => {
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     useEffect(() => {
-      if (!auth.currentUser) {
-        router.push("/");
-      }
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (!user) {
+          router.push("/");
+        } else {
+          setLoading(false);
+        }
+      });
+
+      return () => unsubscribe();
     }, [router]);
 
-    if (!auth.currentUser) {
-      return null;
+    if (loading) {
+      return <div>Loading...</div>; // Show a loading indicator while checking auth state
     }
 
     return <WrappedComponent {...props} />;
   };
-
-  return Wrapper;
 };
 
 export default withAuth;

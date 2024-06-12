@@ -12,11 +12,25 @@ h1 {
   text-align: center;
 }
 
-form {
+.upload-form {
   background: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.upload-button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
 }
 
 input[type="file"],
@@ -30,20 +44,7 @@ textarea {
   border-radius: 4px;
 }
 
-button {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-button:hover {
-  background-color: #0056b3;
-}
 
 .post {
   display: flex;
@@ -128,4 +129,10 @@ nav {
 
 .search svg {
   margin-right: 10px;
+}
+
+.logout-button {
+  margin-left: 20px;
+  padding: 8px;
+  cursor: pointer;
 }
