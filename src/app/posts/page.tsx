@@ -1,6 +1,7 @@
 "use client";
 import '../components/componentStyles.css';
 import PostsComponent from "../components/PostDisplay";
+import withAuth from "../components/withAuth";
 
 const upload = () => {
   return (
@@ -12,4 +13,4 @@ const upload = () => {
 };
 
 
-export default upload;
+export default withAuth(upload);

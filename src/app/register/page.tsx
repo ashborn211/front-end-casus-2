@@ -1,9 +1,10 @@
 "use client";
+// src/app/register/page.tsx
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "../FireBaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
@@ -17,11 +18,16 @@ const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const authUser = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      // Check if the email already exists in Firestore
+      const emailQuery = query(collection(db, "users"), where("email", "==", email));
+      const emailQuerySnapshot = await getDocs(emailQuery);
+
+      if (!emailQuerySnapshot.empty) {
+        alert("Email already taken. Please use a different email.");
+        return;
+      }
+
+      const authUser = await createUserWithEmailAndPassword(auth, email, password);
 
       // Create a user document in Firestore
       await setDoc(doc(db, "users", authUser.user.uid), {

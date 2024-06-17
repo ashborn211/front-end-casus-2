@@ -1,7 +1,9 @@
+// components/UploadImage.tsx
 "use client";
 
 import { useState, ChangeEvent } from "react";
 import { uploadImageAndCreatePost } from "./uploadImageAndLinkToPost";
+import { auth } from "../FireBaseConfig";
 
 const UploadImage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -28,7 +30,7 @@ const UploadImage = () => {
     if ((file || imageUrl) && content) {
       try {
         const data = file ? file : imageUrl;
-        await uploadImageAndCreatePost(data, content); // likes and dislikes are handled inside the function
+        await uploadImageAndCreatePost(data, content);
         alert("Post created successfully");
       } catch (error) {
         alert("Failed to create post");

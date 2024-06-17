@@ -1,6 +1,8 @@
 "use client";
+//src/app/upload
 import '../components/componentStyles.css';
 import UploadImage from "../components/UploadImage";
+import withAuth from "../components/withAuth";
 
 const upload = () => {
   return (
@@ -11,5 +13,4 @@ const upload = () => {
   );
 };
 
-
-export default upload;
+export default withAuth(upload);
