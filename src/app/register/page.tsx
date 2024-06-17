@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "../FireBaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
+import Header from "../components/Header";
+import "./RegisterPage.css";
+
 
 const standardProfilePicture =
   "https://hongkongfp.com/wp-content/uploads/2023/06/20230610_164958-Copy.jpg";
@@ -44,45 +47,54 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4">Register</h1>
-        <form onSubmit={handleRegister}>
-          {/* Registration form */}
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              className="w-full px-3 py-2 border rounded text-black"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+    <main>
+    <>
+      <Header />
+      <form onSubmit={handleRegister}>
+        <div className="container">
+          <h1 className="stroke-text">MyChan</h1>
+          <p>Sign into the world's best webpage!</p>
+          <div className="parent-container">
+            <div className="login-box">
+              <h2>Member SignUp</h2>
+
+              <label htmlFor="email">
+                E-Mail:
+                <input
+                  type="email"
+                  className="form-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+
+              <label htmlFor="password">
+                Password:
+                <input
+                  type="password"
+                  className="form-input"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </label>
+              <div className="button-container">
+               
+                <button type="submit" className="login-link">
+                  SIGNUP!
+                </button>
+              </div>
+              <p className="go-back">
+                  <a href="/">Or Sign Up Instead </a>
+                </p>
+              
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border rounded text-black"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <img
-            src={standardProfilePicture}
-            alt="Standard Profile Picture"
-            className="w-20 h-20 rounded-full mb-4"
-          />
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-          >
-            Register
-          </button>
-        </form>
-      </div>
-    </div>
+        </div>
+      </form>
+    </>
+  </main>
   );
 };
 
