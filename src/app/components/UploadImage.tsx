@@ -1,19 +1,19 @@
 // components/UploadImage.tsx
 "use client";
 
-import { useState, ChangeEvent } from 'react';
-import { uploadImageAndCreatePost } from './uploadImageAndLinkToPost';
+import { useState, ChangeEvent } from "react";
+import { uploadImageAndCreatePost } from "./uploadImageAndLinkToPost";
 import { auth } from "../FireBaseConfig";
 
 const UploadImage = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [content, setContent] = useState<string>("");
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
-      setImageUrl('');
+      setImageUrl("");
     }
   };
 
@@ -30,28 +30,37 @@ const UploadImage = () => {
     if ((file || imageUrl) && content) {
       try {
         const data = file ? file : imageUrl;
-        const userId = auth.currentUser ? auth.currentUser.uid : null; // Get current user ID
-        if (userId) {
-          await uploadImageAndCreatePost(data, content, userId); // Pass user ID to upload function
-          alert('Post created successfully');
-        } else {
-          alert('User not authenticated');
-        }
+        await uploadImageAndCreatePost(data, content);
+        alert("Post created successfully");
       } catch (error) {
-        alert('Failed to create post');
-        console.error('Error creating post:', error);
+        alert("Failed to create post");
+        console.error("Error creating post:", error);
       }
     } else {
-      alert('Please select a file or provide an image URL, and enter content.');
+      alert("Please select a file or provide an image URL, and enter content.");
     }
   };
 
   return (
-    <form className='upload-form' onSubmit={(e) => { e.preventDefault(); handleUpload(); }}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleUpload();
+      }}
+    >
       <h1>Create Post</h1>
       <input type="file" onChange={handleFileChange} />
-      <input type="text" placeholder="Image URL" value={imageUrl} onChange={handleUrlChange} />
-      <textarea placeholder="Enter content" value={content} onChange={handleContentChange}></textarea>
+      <input
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={handleUrlChange}
+      />
+      <textarea
+        placeholder="Enter content"
+        value={content}
+        onChange={handleContentChange}
+      ></textarea>
       <button type="submit">Create Post</button>
     </form>
   );
