@@ -1,52 +1,98 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, onSnapshot, doc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../FireBaseConfig";
-import "./postDisplay.css";
 
 interface Post {
+  id: string;
   imageUrl: string;
   content: string;
   likes: number;
   dislikes: number;
+  isPublic: boolean;
 }
 
 const PostsComponent = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsCollectionRef = collection(db, "posts");
-        const q = query(postsCollectionRef);
-        const querySnapshot = await getDocs(q);
+    const unsubscribe = onSnapshot(query(collection(db, "posts")), (snapshot) => {
+      const fetchedPosts: Post[] = [];
+      snapshot.forEach((doc) => {
+        const postData = doc.data();
+        const post: Post = {
+          id: doc.id,
+          imageUrl: postData.imageUrl,
+          content: postData.content,
+          likes: postData.likes ?? 0,
+          dislikes: postData.dislikes ?? 0,
+          isPublic: postData.isPublic,
+        };
+        fetchedPosts.push(post);
+      });
+      setPosts(fetchedPosts);
+    });
 
-        const fetchedPosts: Post[] = [];
-        querySnapshot.forEach((doc) => {
-          const postData = doc.data();
-          const post: Post = {
-            imageUrl: postData.imageUrl,
-            content: postData.content,
-            likes: postData.likes,
-            dislikes: postData.dislikes,
-          };
-          fetchedPosts.push(post);
-        });
-
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
+    return () => {
+      unsubscribe();
     };
-
-    fetchPosts();
   }, []);
+
+  const handleLike = async (postId: string) => {
+    const postRef = doc(db, "posts", postId);
+
+    try {
+      const postDoc = await getDoc(postRef);
+      if (postDoc.exists()) {
+        const postData = postDoc.data() as Post;
+        const sessionLikes = JSON.parse(sessionStorage.getItem("likes") || "[]");
+
+        if (!sessionLikes.includes(postId)) {
+          // User has not liked the post yet
+          await updateDoc(postRef, {
+            likes: (postData.likes ?? 0) + 1,
+          });
+          sessionLikes.push(postId);
+          sessionStorage.setItem("likes", JSON.stringify(sessionLikes));
+        } else {
+          alert("You have already liked this post.");
+        }
+      }
+    } catch (error) {
+      console.error("Error updating like:", error);
+    }
+  };
+
+  const handleDislike = async (postId: string) => {
+    const postRef = doc(db, "posts", postId);
+
+    try {
+      const postDoc = await getDoc(postRef);
+      if (postDoc.exists()) {
+        const postData = postDoc.data() as Post;
+        const sessionDislikes = JSON.parse(sessionStorage.getItem("dislikes") || "[]");
+
+        if (!sessionDislikes.includes(postId)) {
+          // User has not disliked the post yet
+          await updateDoc(postRef, {
+            dislikes: (postData.dislikes ?? 0) + 1,
+          });
+          sessionDislikes.push(postId);
+          sessionStorage.setItem("dislikes", JSON.stringify(sessionDislikes));
+        } else {
+          alert("You have already disliked this post.");
+        }
+      }
+    } catch (error) {
+      console.error("Error updating dislike:", error);
+    }
+  };
 
   return (
     <div>
-      {posts.map((post, index) => (
-        <div className="post" key={index}>
+      {posts.map((post) => (
+        <div className="post" key={post.id}>
           <img src={post.imageUrl} alt="Post" />
           <div className="post-content">
             <p>{post.content}</p>
@@ -78,36 +124,41 @@ const PostsComponent = () => {
                 </svg>
                 <p>0</p>
               </div>
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.5139 3.36676V2.16028L12.6605 3.01307L1.32083 14.3444C1.21901 14.4461 1.10437 14.4854 0.975788 14.4854C0.847208 14.4854 0.732572 14.4461 0.630752 14.3444C0.456416 14.1702 0.456416 13.8301 0.630752 13.6558L13.6537 0.642577C13.6538 0.642399 13.654 0.64222 13.6542 0.642042C13.7462 0.551093 13.8704 0.5 14 0.5C14.1296 0.5 14.2538 0.551093 14.3458 0.642042C14.346 0.64222 14.3462 0.642399 14.3463 0.642577L27.3692 13.6558C27.5436 13.8301 27.5436 14.1702 27.3692 14.3444C27.1947 14.5188 26.8537 14.5188 26.6792 14.3444L15.3395 3.01307L14.4861 2.16028V3.36676V27.0147C14.4861 27.2719 14.2583 27.5 14 27.5C13.7417 27.5 13.5139 27.2719 13.5139 27.0147V3.36676Z"
-                  fill="#2F3699"
-                  stroke="#2F3699"
-                />
-              </svg>
+              <div className="interaction-buttons">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => handleLike(post.id)}
+                >
+                  <path
+                    d="M13.5139 3.36676V2.16028L12.6605 3.01307L1.32083 14.3444C1.21901 14.4461 1.10437 14.4854 0.975788 14.4854C0.847208 14.4854 0.732572 14.4461 0.630752 14.3444C0.456416 14.1702 0.456416 13.8301 0.630752 13.6558L13.6537 0.642577C13.6538 0.642399 13.654 0.64222 13.6542 0.642042C13.7462 0.551093 13.8704 0.5 14 0.5C14.1296 0.5 14.2538 0.551093 14.3458 0.642042C14.346 0.64222 14.3462 0.642399 14.3463 0.642577L27.3692 13.6558C27.5436 13.8301 27.5436 14.1702 27.3692 14.3444C27.1947 14.5188 26.8537 14.5188 26.6792 14.3444L15.3395 3.01307L14.4861 2.16028V3.36676V27.0147C14.4861 27.2719 14.2583 27.5 14 27.5C13.7417 27.5 13.5139 27.2719 13.5139 27.0147V3.36676Z"
+                    fill="#2F3699"
+                    stroke="#2F3699"
+                  />
+                </svg>
 
-              <p>{post.likes}</p>
-              <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.4861 24.6332V25.8397L15.3395 24.9869L26.6792 13.6556C26.781 13.5539 26.8956 13.5146 27.0242 13.5146C27.1528 13.5146 27.2674 13.5539 27.3692 13.6556C27.5436 13.8298 27.5436 14.1699 27.3692 14.3442L14.3463 27.3574C14.3462 27.3576 14.346 27.3578 14.3458 27.358C14.2538 27.4489 14.1296 27.5 14 27.5C13.8704 27.5 13.7462 27.4489 13.6542 27.358C13.654 27.3578 13.6538 27.3576 13.6537 27.3574L0.630753 14.3442C0.456417 14.1699 0.456417 13.8298 0.630753 13.6556C0.805292 13.4812 1.14629 13.4812 1.32083 13.6556L12.6605 24.9869L13.5139 25.8397V24.6332L13.5139 0.985331C13.5139 0.728102 13.7417 0.5 14 0.5C14.2583 0.5 14.4861 0.728102 14.4861 0.985331L14.4861 24.6332Z"
-                  fill="#C90B0B"
-                  stroke="#C90B0B"
-                />
-              </svg>
+                <p>{post.likes}</p>
 
-              <p>{post.dislikes}</p>
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => handleDislike(post.id)}
+                >
+                  <path
+                    d="M14.4861 24.6332V25.8397L15.3395 24.9869L26.6792 13.6556C26.781 13.5539 26.8956 13.5146 27.0242 13.5146C27.1528 13.5146 27.2674 13.5539 27.3692 13.6556C27.5436 13.8298 27.5436 14.1699 27.3692 14.3442L14.3463 27.3574C14.3462 27.3576 14.346 27.3578 14.3458 27.358C14.2538 27.4489 14.1296 27.5 14 27.5C13.8704 27.5 13.7462 27.4489 13.6542 27.358C13.654 27.3578 13.6538 27.3576 13.6537 27.3574L0.630753 14.3442C0.456417 14.1699 0.456417 13.8298 0.630753 13.6556C0.805292 13.4812 1.14629 13.4812 1.32083 13.6556L12.6605 24.9869L13.5139 25.8397V24.6332L13.5139 0.985331C13.5139 0.728102 13.7417 0.5 14 0.5C14.2583 0.5 14.4861 0.728102 14.4861 0.985331L14.4861 24.6332Z"
+                    fill="#C90B0B"
+                    stroke="#C90B0B"
+                  />
+                </svg>
+
+                <p>{post.dislikes}</p>
+              </div>
             </div>
           </div>
         </div>
