@@ -1,21 +1,21 @@
 // components/uploadImageAndLinkToPost.ts
-import { storage, db } from '../FireBaseConfig';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc, Timestamp, collection } from 'firebase/firestore';
+import { storage, db } from "../FireBaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { doc, setDoc, Timestamp, collection } from "firebase/firestore";
 
 export const uploadImageAndCreatePost = async (
-  data: File | string, 
-  content: string, 
-  userId: string, 
+  data: File | string,
+  content: string,
+  userId: string,
   isPublic: boolean
 ): Promise<void> => {
   try {
     // Generate a random ID using Firestore's collection method
-    const newPostRef = doc(collection(db, 'posts'));
+    const newPostRef = doc(collection(db, "posts"));
     const postId = newPostRef.id;
     let downloadURL: string;
 
-    if (typeof data === 'string') {
+    if (typeof data === "string") {
       // Use provided image URL directly
       downloadURL = data;
     } else {
@@ -34,9 +34,9 @@ export const uploadImageAndCreatePost = async (
       isPublic: isPublic, // Add privacy flag
     });
 
-    console.log('Post created successfully.');
+    console.log("Post created successfully.");
   } catch (error) {
-    console.error('Error creating post:', error);
+    console.error("Error creating post:", error);
     throw error;
   }
 };
