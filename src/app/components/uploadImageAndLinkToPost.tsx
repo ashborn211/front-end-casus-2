@@ -32,6 +32,8 @@ export const uploadImageAndCreatePost = async (
       createdAt: Timestamp.now(),
       userId: userId,
       isPublic: isPublic, // Add privacy flag
+      likes: 0, // Add likes field
+      dislikes: 0, // Add dislikes field
     });
 
     console.log("Post created successfully.");
