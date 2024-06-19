@@ -1,20 +1,21 @@
-import React from "react";
-import "./UserComponent.css";
+import React from 'react';
+import Link from 'next/link';
 
-interface UserProps {
+interface UserComponentProps {
   name: string;
   imageSrc: string;
-  link: string;
+  userId: string;
 }
 
-const UserComponent: React.FC<UserProps> = ({ name, imageSrc, link }) => {
+const UserComponent: React.FC<UserComponentProps> = ({ name, imageSrc, userId }) => {
   return (
-    <a href={link} className="user-item">
-      <div className="user-name">{name}</div>
-      <div className="user-image-container">
-        <img src={imageSrc} alt="Room Image" className="room-image" />
-      </div>
-    </a>
+    <div className="user-component">
+      <img src={imageSrc} alt={name} />
+      <h3>{name}</h3>
+      <Link href={`/user/${userId}`}>
+        <h1>View Profile</h1>
+      </Link>
+    </div>
   );
 };
 

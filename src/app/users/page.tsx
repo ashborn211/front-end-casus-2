@@ -1,13 +1,16 @@
-"use client";
+// pages/Users.tsx
+"use client"
 import React, { useState, useEffect } from "react";
-import { db } from "../FireBaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { db } from "../FireBaseConfig";
 import UserComponent from "../components/UserComponent";
 import Header from "../components/Header";
-import "./users.css"; // Import CSS file
+import { useRouter } from "next/navigation";
+import "./users.css";
 
 const Users = () => {
   const [usersData, setUsersData] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUsersData = async () => {
@@ -15,7 +18,7 @@ const Users = () => {
         const usersSnapshot = await getDocs(collection(db, "users"));
         const usersDataArray: any[] = [];
         usersSnapshot.forEach((userDoc) => {
-          usersDataArray.push(userDoc.data());
+          usersDataArray.push({ id: userDoc.id, ...userDoc.data() });
         });
         setUsersData(usersDataArray);
       } catch (error) {
@@ -27,6 +30,7 @@ const Users = () => {
   }, []);
 
   return (
+    
     <main>
       <Header />
       <div className="user-container">
@@ -35,7 +39,7 @@ const Users = () => {
             key={index}
             name={user.displayName}
             imageSrc={user.profilePicture}
-            link="#"
+            userId={user.id} // Ensure userId is passed to UserComponent
           />
         ))}
       </div>
