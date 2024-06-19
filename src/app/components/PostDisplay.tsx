@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { collection, query, onSnapshot, doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  onSnapshot,
+  doc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "../FireBaseConfig";
 
 interface Post {
@@ -17,22 +24,25 @@ const PostsComponent = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(query(collection(db, "posts")), (snapshot) => {
-      const fetchedPosts: Post[] = [];
-      snapshot.forEach((doc) => {
-        const postData = doc.data();
-        const post: Post = {
-          id: doc.id,
-          imageUrl: postData.imageUrl,
-          content: postData.content,
-          likes: postData.likes ?? 0,
-          dislikes: postData.dislikes ?? 0,
-          isPublic: postData.isPublic,
-        };
-        fetchedPosts.push(post);
-      });
-      setPosts(fetchedPosts);
-    });
+    const unsubscribe = onSnapshot(
+      query(collection(db, "posts")),
+      (snapshot) => {
+        const fetchedPosts: Post[] = [];
+        snapshot.forEach((doc) => {
+          const postData = doc.data();
+          const post: Post = {
+            id: doc.id,
+            imageUrl: postData.imageUrl,
+            content: postData.content,
+            likes: postData.likes ?? 0,
+            dislikes: postData.dislikes ?? 0,
+            isPublic: postData.isPublic,
+          };
+          fetchedPosts.push(post);
+        });
+        setPosts(fetchedPosts);
+      }
+    );
 
     return () => {
       unsubscribe();
@@ -46,13 +56,27 @@ const PostsComponent = () => {
       const postDoc = await getDoc(postRef);
       if (postDoc.exists()) {
         const postData = postDoc.data() as Post;
-        const sessionLikes = JSON.parse(sessionStorage.getItem("likes") || "[]");
+        const sessionLikes = JSON.parse(
+          sessionStorage.getItem("likes") || "[]"
+        );
+        const sessionDislikes = JSON.parse(
+          sessionStorage.getItem("dislikes") || "[]"
+        );
 
         if (!sessionLikes.includes(postId)) {
           // User has not liked the post yet
-          await updateDoc(postRef, {
+          const updates: any = {
             likes: (postData.likes ?? 0) + 1,
-          });
+          };
+
+          // If user has disliked the post, remove the dislike
+          if (sessionDislikes.includes(postId)) {
+            updates.dislikes = (postData.dislikes ?? 0) - 1;
+            sessionDislikes.splice(sessionDislikes.indexOf(postId), 1);
+            sessionStorage.setItem("dislikes", JSON.stringify(sessionDislikes));
+          }
+
+          await updateDoc(postRef, updates);
           sessionLikes.push(postId);
           sessionStorage.setItem("likes", JSON.stringify(sessionLikes));
         } else {
@@ -71,13 +95,27 @@ const PostsComponent = () => {
       const postDoc = await getDoc(postRef);
       if (postDoc.exists()) {
         const postData = postDoc.data() as Post;
-        const sessionDislikes = JSON.parse(sessionStorage.getItem("dislikes") || "[]");
+        const sessionLikes = JSON.parse(
+          sessionStorage.getItem("likes") || "[]"
+        );
+        const sessionDislikes = JSON.parse(
+          sessionStorage.getItem("dislikes") || "[]"
+        );
 
         if (!sessionDislikes.includes(postId)) {
           // User has not disliked the post yet
-          await updateDoc(postRef, {
+          const updates: any = {
             dislikes: (postData.dislikes ?? 0) + 1,
-          });
+          };
+
+          // If user has liked the post, remove the like
+          if (sessionLikes.includes(postId)) {
+            updates.likes = (postData.likes ?? 0) - 1;
+            sessionLikes.splice(sessionLikes.indexOf(postId), 1);
+            sessionStorage.setItem("likes", JSON.stringify(sessionLikes));
+          }
+
+          await updateDoc(postRef, updates);
           sessionDislikes.push(postId);
           sessionStorage.setItem("dislikes", JSON.stringify(sessionDislikes));
         } else {
