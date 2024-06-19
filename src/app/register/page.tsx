@@ -38,7 +38,7 @@ const RegisterPage = () => {
         profilePicture: standardProfilePicture,
       });
 
-      alert("Registration successful!");
+      // alert("Registration successful!");
       router.push("/home");
     } catch (error: any) {
       console.error(error.message);

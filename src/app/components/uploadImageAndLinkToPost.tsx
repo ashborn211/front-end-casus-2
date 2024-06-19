@@ -16,29 +16,26 @@ export const uploadImageAndCreatePost = async (
     let downloadURL: string;
 
     if (typeof data === "string") {
-      // Use provided image URL directly
       downloadURL = data;
     } else {
-      // Upload the image to Firebase Storage with the post ID
       const storageRef = ref(storage, `images/${postId}`);
       const snapshot = await uploadBytes(storageRef, data);
       downloadURL = await getDownloadURL(snapshot.ref);
     }
 
-    // Create a new Firestore document with the post ID
     await setDoc(newPostRef, {
       imageUrl: downloadURL,
       content: content,
       createdAt: Timestamp.now(),
       userId: userId,
-      isPublic: isPublic, // Add privacy flag
-      likes: 0, // Add likes field
-      dislikes: 0, // Add dislikes field
+      isPublic: isPublic, 
+      likes: 0, 
+      dislikes: 0, 
     });
 
-    console.log("Post created successfully.");
+    // console.log("Post created successfully.");
   } catch (error) {
-    console.error("Error creating post:", error);
+    // console.error("Error creating post:", error);
     throw error;
   }
 };

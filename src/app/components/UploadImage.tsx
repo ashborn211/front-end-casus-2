@@ -37,13 +37,13 @@ const UploadImage = () => {
         const userId = auth.currentUser ? auth.currentUser.uid : null; // Get current user ID
         if (userId) {
           await uploadImageAndCreatePost(data, content, userId, isPublic); // Pass user ID and privacy flag to upload function
-          alert('Post created successfully');
+          // alert('Post created successfully');
         } else {
           alert('User not authenticated');
         }
       } catch (error) {
         alert("Failed to create post");
-        console.error("Error creating post:", error);
+        // console.error("Error creating post:", error);
       }
     } else {
       alert("Please select a file or provide an image URL, and enter content.");

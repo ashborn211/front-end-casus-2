@@ -84,7 +84,7 @@ const PostsComponent = () => {
         }
       }
     } catch (error) {
-      console.error("Error updating like:", error);
+      // console.error("Error updating like:", error);
     }
   };
 
@@ -123,7 +123,7 @@ const PostsComponent = () => {
         }
       }
     } catch (error) {
-      console.error("Error updating dislike:", error);
+      // console.error("Error updating dislike:", error);
     }
   };
 

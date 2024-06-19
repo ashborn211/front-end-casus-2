@@ -64,10 +64,10 @@ const LoginPage = () => {
         });
       }
 
-      alert("Google Sign-In successful!");
+      // alert("Google Sign-In successful!");
       router.push("/home");
     } catch (error: any) {
-      console.error("Error signing in with Google:", error.message);
+      // console.error("Error signing in with Google:", error.message);
       alert("Google Sign-In failed. Please try again.");
     }
   };
