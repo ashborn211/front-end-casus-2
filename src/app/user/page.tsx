@@ -22,7 +22,6 @@ const ProfilePage = () => {
         router.push("/");
       }
     };
-
     fetchUserData();
   }, [router]);
 
