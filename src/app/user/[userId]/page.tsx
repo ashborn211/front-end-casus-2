@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // pages/user/[userId]/page.tsx
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";

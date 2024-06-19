@@ -1,5 +1,5 @@
 // pages/Users.tsx
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../FireBaseConfig";
@@ -30,7 +30,6 @@ const Users = () => {
   }, []);
 
   return (
-    
     <main>
       <Header />
       <div className="user-container">
@@ -39,7 +38,7 @@ const Users = () => {
             key={index}
             name={user.displayName}
             imageSrc={user.profilePicture}
-            userId={user.id} // Ensure userId is passed to UserComponent
+            userId={user.id} 
           />
         ))}
       </div>
