@@ -1,7 +1,7 @@
 "use client"
-// pages/user/other/[userId].tsx
+// pages/user/[userId]/page.tsx
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation"; // Import useSearchParams from Next.js
+import { useParams } from "next/navigation";
 import { db } from "../../FireBaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import Header from "../../components/Header";
@@ -9,13 +9,13 @@ import "../profile.css";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
-  const searchParams = useSearchParams(); 
-  const userId = searchParams.get("userId"); 
+  const { userId } = useParams<{ userId: string }>(); // Destructure userId from useParams
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (userId) {
         try {
-          const userDocRef = doc(db, "users", userId); // Use "id" directly from searchParams
+          const userDocRef = doc(db, "users", userId); // Ensure userId is treated as string
           const userDoc = await getDoc(userDocRef);
           if (userDoc.exists()) {
             setUserData(userDoc.data());
@@ -29,7 +29,7 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, [userId]); 
+  }, [userId]); // Add userId to dependency array for useEffect
 
   if (!userData) {
     return <div>Loading...</div>;
