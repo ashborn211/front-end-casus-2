@@ -1,5 +1,5 @@
 body {
-  background-color: #add8e6; /* Light blue background */
+  background-color: #add8e6; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,16 +49,16 @@ textarea {
 
 .post {
   display: flex;
-  background-color: white; /* Set background color to white */
-  padding: 20px; /* Add padding for spacing */
-  margin-bottom: 20px; /* Adjust spacing between posts */
+  background-color: white; 
+  padding: 20px; 
+  margin-bottom: 20px; 
   width: 30vw;
 }
 
 .post img {
-  width: 200px; /* Adjust image width */
+  width: 200px; 
   height: auto;
-  margin-right: 20px; /* Adjust spacing between image and content */
+  margin-right: 20px; 
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");

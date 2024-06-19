@@ -1,4 +1,3 @@
-// src/components/withAuth.tsx
 "use client";
 
 import { useEffect, useState, ComponentType } from "react";

@@ -1,4 +1,3 @@
-// components/uploadImageAndLinkToPost.ts
 import { storage, db } from "../FireBaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, setDoc, Timestamp, collection } from "firebase/firestore";

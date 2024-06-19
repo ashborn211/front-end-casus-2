@@ -1,5 +1,3 @@
-// src/components/LogoutButton.tsx
-
 import React from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../FireBaseConfig";

@@ -1,4 +1,3 @@
-// src/app/profile/page.tsx (Profile Page)
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,7 +6,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import "./profile.css";
 import Header from "../components/Header";
-import Head from "next/head";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);

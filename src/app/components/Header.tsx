@@ -1,6 +1,6 @@
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link"; 
 import React from "react";
-import LogoutButton from "./LogoutButton"; // Import the LogoutButton component
+import LogoutButton from "./LogoutButton"; 
 import "./componentStyles.css";
 export default function Header() {
 
