@@ -6,6 +6,8 @@ import { auth, db } from "../FireBaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import "./profile.css";
+import Header from "../components/Header";
+import Head from "next/head";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -32,15 +34,19 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="profile-container">
-      <h1>Profile Page</h1>
-      <img
-        src={userData.profilePicture}
-        alt="Profile"
-        className="profile-picture"
-      />
-      <h2>{userData.displayName}</h2>
-    </div>
+    <main>
+      <Header></Header>
+
+      <div className="profile-container">
+        <h1>Profile Page</h1>
+        <img
+          src={userData.profilePicture}
+          alt="Profile"
+          className="profile-picture"
+        />
+        <h2>{userData.displayName}</h2>
+      </div>
+    </main>
   );
 };
 
