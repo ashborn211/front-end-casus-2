@@ -34,7 +34,10 @@ const ProfilePage = () => {
         const currentUserDoc = await getDoc(currentUserDocRef);
         if (currentUserDoc.exists()) {
           const currentUserData = currentUserDoc.data();
-          if (currentUserData.friends && currentUserData.friends.includes(userId)) {
+          if (
+            currentUserData.friends &&
+            currentUserData.friends.includes(userId)
+          ) {
             setIsFriend(true);
           }
         }
@@ -51,7 +54,6 @@ const ProfilePage = () => {
       const currentUserDocRef = doc(db, "users", currentUserId);
       const otherUserDocRef = doc(db, "users", userId);
 
-      // Perform both updates as a batch
       try {
         await updateDoc(currentUserDocRef, {
           friends: arrayUnion(userId),
@@ -81,12 +83,8 @@ const ProfilePage = () => {
           className="profile-picture"
         />
         <h2>{userData.displayName}</h2>
-        {!isFriend && (
-          <button onClick={handleAddFriend}>Add Friend</button>
-        )}
-        {isFriend && (
-          <button disabled>Friend Added</button>
-        )}
+        {!isFriend && <button onClick={handleAddFriend}>Add Friend</button>}
+        {isFriend && <button disabled>Friend Added</button>}
       </div>
     </main>
   );
