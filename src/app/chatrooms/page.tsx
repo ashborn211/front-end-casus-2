@@ -1,5 +1,4 @@
 "use client";
-
 import Header from "../components/Header";
 import "./chatrooms.css";
 import RoomComponent from "../components/RoomComponent";
