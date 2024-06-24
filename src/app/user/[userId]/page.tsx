@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { auth, db } from "../../FireBaseConfig";
-import { doc, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import Header from "../../components/Header";
 import "../profile.css";
 
@@ -10,12 +10,13 @@ const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
   const [isFriend, setIsFriend] = useState(false);
   const params = useParams();
-  const userId = params.userId;
+  const userId = params.userId as string;
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (auth.currentUser) {
-        const userDocRef = doc(db, "users", auth.currentUser.uid);
+      if (userId) {
+        console.log(`Fetching data for userId: ${userId}`);
+        const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           setUserData(userDoc.data());
@@ -27,7 +28,9 @@ const ProfilePage = () => {
 
     const checkIfFriend = async () => {
       if (auth.currentUser) {
-        const currentUserDocRef = doc(db, "users", auth.currentUser.uid);
+        const currentUserId = auth.currentUser.uid as string;
+        console.log(`Current user ID: ${currentUserId}`);
+        const currentUserDocRef = doc(db, "users", currentUserId);
         const currentUserDoc = await getDoc(currentUserDocRef);
         if (currentUserDoc.exists()) {
           const currentUserData = currentUserDoc.data();
@@ -44,11 +47,22 @@ const ProfilePage = () => {
 
   const handleAddFriend = async () => {
     if (auth.currentUser) {
-      const currentUserDocRef = doc(db, "users", auth.currentUser.uid);
-      await updateDoc(currentUserDocRef, {
-        friends: arrayUnion(userId),
-      });
-      setIsFriend(true);
+      const currentUserId = auth.currentUser.uid as string;
+      const currentUserDocRef = doc(db, "users", currentUserId);
+      const otherUserDocRef = doc(db, "users", userId);
+
+      // Perform both updates as a batch
+      try {
+        await updateDoc(currentUserDocRef, {
+          friends: arrayUnion(userId),
+        });
+        await updateDoc(otherUserDocRef, {
+          friends: arrayUnion(currentUserId),
+        });
+        setIsFriend(true);
+      } catch (error) {
+        console.error("Error updating friends:", error);
+      }
     }
   };
 
