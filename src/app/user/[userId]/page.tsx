@@ -10,43 +10,47 @@ import withAuth from "../../components/withAuth";
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
   const [isFriend, setIsFriend] = useState(false);
+  const [canViewProfile, setCanViewProfile] = useState(false);
   const params = useParams();
   const userId = params.userId as string;
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (userId) {
-        console.log(`Fetching data for userId: ${userId}`);
         const userDocRef = doc(db, "users", userId);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-          setUserData(userDoc.data());
+          const data = userDoc.data();
+          setUserData(data);
+
+          // Check if the profile is public or if the current user is a friend
+          if (data.privacy != "private") {
+            setCanViewProfile(true);
+          } else {
+            checkIfFriend(data);
+          }
         } else {
           console.error("User not found");
         }
       }
     };
 
-    const checkIfFriend = async () => {
+    const checkIfFriend = async (data: any) => {
       if (auth.currentUser) {
         const currentUserId = auth.currentUser.uid as string;
-        console.log(`Current user ID: ${currentUserId}`);
         const currentUserDocRef = doc(db, "users", currentUserId);
         const currentUserDoc = await getDoc(currentUserDocRef);
         if (currentUserDoc.exists()) {
           const currentUserData = currentUserDoc.data();
-          if (
-            currentUserData.friends &&
-            currentUserData.friends.includes(userId)
-          ) {
+          if (currentUserData.friends && currentUserData.friends.includes(userId)) {
             setIsFriend(true);
+            setCanViewProfile(true);
           }
         }
       }
     };
 
     fetchUserData();
-    checkIfFriend();
   }, [userId]);
 
   const handleAddFriend = async () => {
@@ -63,6 +67,7 @@ const ProfilePage = () => {
           friends: arrayUnion(currentUserId),
         });
         setIsFriend(true);
+        setCanViewProfile(true);
       } catch (error) {
         console.error("Error updating friends:", error);
       }
@@ -71,6 +76,10 @@ const ProfilePage = () => {
 
   if (!userData) {
     return <div>Loading...</div>;
+  }
+
+  if (!canViewProfile) {
+    return <div>This profile is private.</div>;
   }
 
   return (
