@@ -8,8 +8,9 @@ import {
   doc,
   updateDoc,
   getDoc,
+  arrayUnion,
 } from "firebase/firestore";
-import { db } from "../FireBaseConfig";
+import { db, auth } from "../FireBaseConfig";
 
 interface Post {
   id: string;
@@ -18,10 +19,21 @@ interface Post {
   likes: number;
   dislikes: number;
   isPublic: boolean;
+  comments: Comment[];
+}
+
+interface Comment {
+  userId: string;
+  text: string;
+  createdAt: Date;
 }
 
 const PostsComponent = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
+  const [showCommentModal, setShowCommentModal] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -37,6 +49,7 @@ const PostsComponent = () => {
             likes: postData.likes ?? 0,
             dislikes: postData.dislikes ?? 0,
             isPublic: postData.isPublic,
+            comments: postData.comments ?? [],
           };
           fetchedPosts.push(post);
         });
@@ -64,12 +77,10 @@ const PostsComponent = () => {
         );
 
         if (!sessionLikes.includes(postId)) {
-          // User has not liked the post yet
           const updates: any = {
             likes: (postData.likes ?? 0) + 1,
           };
 
-          // If user has disliked the post, remove the dislike
           if (sessionDislikes.includes(postId)) {
             updates.dislikes = (postData.dislikes ?? 0) - 1;
             sessionDislikes.splice(sessionDislikes.indexOf(postId), 1);
@@ -84,7 +95,7 @@ const PostsComponent = () => {
         }
       }
     } catch (error) {
-      // console.error("Error updating like:", error);
+      console.error("Error updating like:", error);
     }
   };
 
@@ -103,12 +114,10 @@ const PostsComponent = () => {
         );
 
         if (!sessionDislikes.includes(postId)) {
-          // User has not disliked the post yet
           const updates: any = {
             dislikes: (postData.dislikes ?? 0) + 1,
           };
 
-          // If user has liked the post, remove the like
           if (sessionLikes.includes(postId)) {
             updates.likes = (postData.likes ?? 0) - 1;
             sessionLikes.splice(sessionLikes.indexOf(postId), 1);
@@ -123,10 +132,43 @@ const PostsComponent = () => {
         }
       }
     } catch (error) {
-      // console.error("Error updating dislike:", error);
+      console.error("Error updating dislike:", error);
     }
   };
 
+  const handleAddComment = async (postId: string) => {
+    if (auth.currentUser) {
+      const currentUserId = auth.currentUser.uid as string;
+      const postRef = doc(db, "posts", postId);
+      const newComment = {
+        userId: currentUserId,
+        text: commentText[postId],
+        createdAt: new Date(),
+      };
+
+      try {
+        await updateDoc(postRef, {
+          comments: arrayUnion(newComment),
+        });
+        setCommentText({ ...commentText, [postId]: "" });
+        setShowCommentModal({ ...showCommentModal, [postId]: false });
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
+    }
+  };
+
+  const handleCommentChange = (postId: string, text: string) => {
+    setCommentText({ ...commentText, [postId]: text });
+  };
+
+  const handleCommentIconClick = (postId: string) => {
+    setShowCommentModal({ ...showCommentModal, [postId]: true });
+  };
+
+  const handleCloseModal = (postId: string) => {
+    setShowCommentModal({ ...showCommentModal, [postId]: false });
+  };
   return (
     <div>
       {posts.map((post) => (
@@ -135,7 +177,10 @@ const PostsComponent = () => {
           <div className="post-content">
             <p>{post.content}</p>
             <div className="post-buttons">
-              <div className="comments">
+              <div
+                className="comments"
+                onClick={() => handleCommentIconClick(post.id)}
+              >
                 <svg
                   width="28"
                   height="28"
@@ -196,6 +241,29 @@ const PostsComponent = () => {
                 </svg>
 
                 <p>{post.dislikes}</p>
+                {showCommentModal[post.id] && (
+                  <div className="modal">
+                    <div className="modal-content">
+                      <span
+                        className="close"
+                        onClick={() => handleCloseModal(post.id)}
+                      >
+                        &times;
+                      </span>
+                      <h2>Add a Comment</h2>
+                      <textarea
+                        value={commentText[post.id] || ""}
+                        onChange={(e) =>
+                          handleCommentChange(post.id, e.target.value)
+                        }
+                        placeholder="Add a comment..."
+                      />
+                      <button onClick={() => handleAddComment(post.id)}>
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
