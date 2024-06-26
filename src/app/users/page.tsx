@@ -38,7 +38,7 @@ const Users = () => {
             key={index}
             name={user.displayName}
             imageSrc={user.profilePicture}
-            userId={user.id} 
+            userId={user.id}
           />
         ))}
       </div>
