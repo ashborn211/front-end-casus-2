@@ -1,11 +1,12 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { auth, db } from "../FireBaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import "./profile.css";
 import Header from "../components/Header";
-import { Head } from "next/document";
+import Head from "next/head";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
