@@ -14,6 +14,8 @@ const standardProfilePicture =
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+
   const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +36,8 @@ const RegisterPage = () => {
       // Create a user document in Firestore
       await setDoc(doc(db, "users", authUser.user.uid), {
         email: email,
+        password: password,
+        username: username,
         profilePicture: standardProfilePicture,
       });
 
@@ -56,6 +60,17 @@ const RegisterPage = () => {
           <div className="parent-container">
             <div className="login-box">
               <h2>Member SignUp</h2>
+
+              <label htmlFor="username">
+                Username:
+                <input
+                  type="username"
+                  className="form-input"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </label>
 
               <label htmlFor="email">
                 E-Mail:
