@@ -5,6 +5,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import "./profile.css";
 import Header from "../components/Header";
+import { Head } from "next/document";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
