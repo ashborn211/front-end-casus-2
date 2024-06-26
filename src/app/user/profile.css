@@ -1,26 +1,93 @@
-/* src/app/profile/profile.css */
-.profile-container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-  }
-  
-  .logout-button {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .logout-button:hover {
-    background-color: #ff1a1a;
-  }
-  
+.account-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.user-info {
+  width: 100%;
+  height: 100%;
+  background-color: rebeccapurple;
+}
+.profile-info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  width: 100%;
+  color: black;
+}
+.profile-box {
+  align-items: center;
+  border: 2px solid #0077b6;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  width: 90%;
+  height: 220px;
+}
+.profile-description-box {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  width: 90%;
+  border: 2px solid #0077b6;
+  height: 200px;
+}
+.avatar-box {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+.avatar-box h2 {
+  height: 15px;
+  width: 250px;
+  font-size: 24px;
+  color: black;
+}
+.avatar-box p {
+  color: blue;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+}
+.profile-description-title p {
+  color: black;
+}
+
+.profile-description {
+  margin-top: 6%;
+}
+.profile-description p {
+  color: black;
+}
+.edit-desc {
+  margin-top: 15%;
+  justify-self: flex-end;
+  color: blue;
+  text-decoration-line: underline;
+  border: 2px solid #0077b6;
+  text-decoration-thickness: 2px;
+}
+.boxname,
+.boxname p {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+.friends-box {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  width: 90%;
+  height: 200px;
+  border: 2px solid #0077b6;
+}
+.friends-box p {
+  margin-left: 3%;
+  color: black;
+}
