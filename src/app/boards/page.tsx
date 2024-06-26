@@ -11,6 +11,13 @@ interface Image {
   description: string; 
 }
 
+const descriptions: { [key: string]: string } = {
+  "image1.png": "Description for image1",
+  "image2.png": "Description for image2",
+  "image3.png": "Description for image3",
+  // Add more descriptions as needed
+};
+
 const UserComponent: React.FC = () => {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,7 +29,11 @@ const UserComponent: React.FC = () => {
         const listResult = await listAll(storageRef);
         const imagePromises = listResult.items.map(async (itemRef) => {
           const url = await getDownloadURL(itemRef);
-          return { name: itemRef.name, image: url, description: `Description for ${itemRef.name}` }; // Add appropriate descriptions here
+          return { 
+            name: itemRef.name, 
+            image: url, 
+            description: descriptions[itemRef.name] || 'Default description' // Use the description mapping
+          };
         });
         const fetchedImages = await Promise.all(imagePromises);
         setImages(fetchedImages);
