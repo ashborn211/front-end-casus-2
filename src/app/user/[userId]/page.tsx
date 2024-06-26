@@ -5,6 +5,7 @@ import { auth, db } from "../../FireBaseConfig";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import Header from "../../components/Header";
 import "../profile.css";
+import withAuth from "../../components/withAuth";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -90,4 +91,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuth(ProfilePage);
