@@ -1,12 +1,13 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { auth, db } from "../FireBaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import "./profile.css";
 import Header from "../components/Header";
 import Head from "next/head";
+import withAuth from "../components/withAuth";
+import PrivacyToggle from "../components/PrivacyToggle";
+import "./profile.css";
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -85,7 +86,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     if (customCss) {
@@ -120,7 +121,12 @@ const ProfilePage = () => {
                 alt="Profile"
                 className="profile-picture"
               />
-              <p>Add friend!</p>
+              {auth.currentUser && (
+                <PrivacyToggle
+                  currentPrivacy={userData.privacy || "public"}
+                  userId={auth.currentUser.uid}
+                />
+              )}
             </div>
           </div>
           <div className="profile-description-box">
@@ -177,4 +183,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withAuth(ProfilePage);
