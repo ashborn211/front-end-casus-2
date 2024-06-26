@@ -14,7 +14,7 @@ const standardProfilePicture =
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
+  const [displayName, setDisplayName] = useState<string>("");
 
   const router = useRouter();
 
@@ -37,7 +37,7 @@ const RegisterPage = () => {
       await setDoc(doc(db, "users", authUser.user.uid), {
         email: email,
         password: password,
-        username: username,
+        displayName: displayName,
         profilePicture: standardProfilePicture,
       });
 
@@ -66,8 +66,8 @@ const RegisterPage = () => {
                 <input
                   type="username"
                   className="form-input"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
                   required
                 />
               </label>
