@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+.post-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

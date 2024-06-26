@@ -1,5 +1,5 @@
 body {
-  background-color: #add8e6; /* Light blue background */
+  background-color: #add8e6; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,11 +12,26 @@ h1 {
   text-align: center;
 }
 
-form {
+.upload-form {
   background: white;
+
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.upload-button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
 }
 
 input[type="file"],
@@ -30,33 +45,20 @@ textarea {
   border-radius: 4px;
 }
 
-button {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-button:hover {
-  background-color: #0056b3;
-}
 
 .post {
   display: flex;
-  background-color: white; /* Set background color to white */
-  padding: 20px; /* Add padding for spacing */
-  margin-bottom: 20px; /* Adjust spacing between posts */
+  background-color: white; 
+  padding: 20px; 
+  margin-bottom: 20px; 
   width: 30vw;
 }
 
 .post img {
-  width: 200px; /* Adjust image width */
+  width: 200px; 
   height: auto;
-  margin-right: 20px; /* Adjust spacing between image and content */
+  margin-right: 20px; 
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
@@ -128,4 +130,10 @@ nav {
 
 .search svg {
   margin-right: 10px;
+}
+
+.logout-button {
+  margin-left: 20px;
+  padding: 8px;
+  cursor: pointer;
 }

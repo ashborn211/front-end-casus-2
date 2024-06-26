@@ -60,7 +60,7 @@ label {
 
 }
 
-input[type="email"], input[type="password"], input[type="username"] {
+input[type="email"], input[type="password"] {
     width: 200px;
     
     margin-bottom: 10px;
@@ -108,10 +108,4 @@ a:hover {
 
 form {
     margin: 0;
-}
-.go-back {
-    margin-top: 50px;
-}
-input[type="username"] {
-    margin-right: 25px;
 }

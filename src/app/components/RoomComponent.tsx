@@ -1,4 +1,3 @@
-// components/RoomComponent.tsx
 import React from "react";
 import "./RoomComponent.css";
 

@@ -1,5 +1,4 @@
 "use client";
-
 import Header from "../components/Header";
 import "./chatrooms.css";
 import RoomComponent from "../components/RoomComponent";
@@ -7,6 +6,7 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../FireBaseConfig";
+import withAuth from "../components/withAuth";
 
 interface Room {
   description: string;
@@ -82,4 +82,4 @@ const Chatrooms = () => {
   );
 };
 
-export default Chatrooms;
+export default withAuth(Chatrooms);

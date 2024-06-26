@@ -1,17 +1,20 @@
+"use client";
+
 import Header from "../components/Header";
 import PostsComponent from "../components/PostDisplay";
+import withAuth from "../components/withAuth";
+import "./home.css";
 
 const Home = () => {
   return (
     <main>
       <Header></Header>
 
-      <div>
-      <PostsComponent />
-
+      <div className="post-container">
+        <PostsComponent />
       </div>
     </main>
   );
 };
 
-export default Home;
+export default withAuth(Home);

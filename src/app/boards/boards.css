@@ -1,0 +1,28 @@
+  main{
+    box-shadow: 2px 2px 2px 2px;
+  }
+  
+  .item {
+    flex: 1 1 calc(25% - 20px); /* Four items per row, with some margin */
+    margin: 10px;
+    box-sizing: border-box;
+  }
+  
+/* boards.css */
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 16px; /* Adjust the gap between images as needed */
+    padding: 16px; /* Add padding around the grid */
+  }
+  
+  .item img {
+    width: 70%; /* Ensure images take up the full width of the grid cell */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: add rounded corners to images */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow to images */
+  }
+  
+  h1 {
+    margin-right: 60px;
+  }
