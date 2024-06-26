@@ -23,4 +23,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow to images */
   }
   
-  
+  h1 {
+    margin-right: 60px;
+  }
